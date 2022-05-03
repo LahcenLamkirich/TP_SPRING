@@ -16,7 +16,7 @@ public class Consultation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
     private Date dateConsultation ;
-    private Date rappportConsultation ;
+    private String rappportConsultation ;
 
     @OneToOne
     private RendezVous rendezVous;

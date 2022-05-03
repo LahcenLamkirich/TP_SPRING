@@ -1,8 +1,6 @@
 package com.lamkirich.hospital.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,7 +8,8 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 
 public class Medecin {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +20,15 @@ public class Medecin {
 
     @OneToMany(mappedBy = "medecin", fetch = FetchType.LAZY)
     private List<RendezVous> rendezVous ;
+
+
+    @Override
+    public String toString() {
+        return "Medecin{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", email='" + email + '\'' +
+                ", specialite='" + specialite + '\'' +
+                '}';
+    }
 }

@@ -1,11 +1,10 @@
 package com.lamkirich.hospital.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,8 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 
 public class Patient {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,15 @@ public class Patient {
     private boolean malade ;
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
-    private List<RendezVous> rendezVous ;
+    private List<RendezVous> rendezVous = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", malade=" + malade +
+                '}';
+    }
 }
