@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -38,6 +39,8 @@ public class HospitalServiceImp implements HospitalService{
 
     @Override
     public RendezVous saveRendezVous(RendezVous rendezVous) {
+        String idRDV = UUID.randomUUID().toString();
+        rendezVous.setId(idRDV);
         return rendezVousRepository.save(rendezVous);
     }
 
