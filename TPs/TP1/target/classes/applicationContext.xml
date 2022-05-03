@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="Person" class="metier.Person">
+        <property name="name" value="lahcen" />
+        <property name="age" value="21" />
+    </bean>
+
+    <bean id="dao" class="dao.IDaoImpl" />
+
+    <bean id="metier" class="metier.IMetierImpl">
+<!--        <constructor-arg index="0" ref="dao" />-->
+        <property name="dao" ref="dao" /> <!--POur faire l'injection des setter -->
+    </bean>
+
+
+</beans>
