@@ -1,5 +1,6 @@
 package com.lamkirich.hospital.Entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,12 +22,12 @@ public class RendezVous {
     private StatusRDV status ;
 
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Patient patient ;
     @ManyToOne
     private Medecin medecin ;
     @OneToOne(mappedBy = "rendezVous")
     private Consultation consultation ;
-
 
     @Override
     public String toString() {
