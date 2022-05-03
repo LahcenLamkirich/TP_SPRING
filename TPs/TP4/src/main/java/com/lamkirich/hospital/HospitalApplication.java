@@ -5,6 +5,8 @@ import com.lamkirich.hospital.Repositories.ConsultationRepository;
 import com.lamkirich.hospital.Repositories.MedecinRepository;
 import com.lamkirich.hospital.Repositories.PatientRepository;
 import com.lamkirich.hospital.Repositories.RendezVousRepository;
+import com.lamkirich.hospital.Service.HospitalServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -22,22 +24,22 @@ import java.util.stream.Stream;
 
 @SpringBootApplication
 public class HospitalApplication {
-
+    @Autowired
+    PatientRepository patientRepository ;
+    @Autowired
+    MedecinRepository medecinRepository ;
     public static void main(String[] args) {
         SpringApplication.run(HospitalApplication.class, args);
     }
 
     @Bean
-    CommandLineRunner start(PatientRepository patientRepository,
-                            MedecinRepository medecinRepository,
-                            RendezVousRepository rendezVousRepository,
-                            ConsultationRepository consultationRepository) {
+    CommandLineRunner start(HospitalServiceImp hospitalServiceImp) {
         return args -> {
             // Ajout d'un patient
             Stream.of("Lahcen", "Hassan", "Nouhaila")
                     .forEach(name -> {
                         Patient patient = new Patient(null, name, new Date(), false, null);
-                        patientRepository.save(patient);
+                        hospitalServiceImp.savePatient(patient);
                     });
             // Ajout d'un medecin
             Stream.of("Abdo", "Yasser", "Yassmine")
@@ -46,7 +48,7 @@ public class HospitalApplication {
                         medecin.setNom(nameMedecin);
                         medecin.setEmail(nameMedecin + "@gmail.com");
                         medecin.setSpecialite(Math.random()>0.5? "Dentiste": "Pediatre");
-                        medecinRepository.save(medecin);
+                        hospitalServiceImp.saveMedecin(medecin);
                     });
 
                 Patient p1 = patientRepository.findPatientByNom("Lahcen");
@@ -61,7 +63,7 @@ public class HospitalApplication {
                 rendezVous.setPatient(p1);
                 rendezVous.setMedecin(m1);
 
-                rendezVousRepository.save(rendezVous);
+                hospitalServiceImp.saveRendezVous(rendezVous);
 
                 //Ajout d'une consultation :
                 Consultation consultation = new Consultation();
@@ -69,7 +71,7 @@ public class HospitalApplication {
                 consultation.setRendezVous(rendezVous);
                 consultation.setRappportConsultation("Le rapport de la consultation ... ");
 
-                consultationRepository.save(consultation);
+                hospitalServiceImp.saveConsultation(consultation);
 
         };
     }
