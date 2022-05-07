@@ -6,6 +6,7 @@ import com.lamkirich.hospital.Repositories.MedecinRepository;
 import com.lamkirich.hospital.Repositories.PatientRepository;
 import com.lamkirich.hospital.Repositories.RendezVousRepository;
 import com.lamkirich.hospital.Service.HospitalServiceImp;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -62,8 +63,7 @@ public class HospitalApplication {
                 rendezVous.setStatus(StatusRDV.PENDING);
                 rendezVous.setPatient(p1);
                 rendezVous.setMedecin(m1);
-
-               RendezVous savedRDV =  hospitalServiceImp.saveRendezVous(rendezVous);
+                RendezVous savedRDV =  hospitalServiceImp.saveRendezVous(rendezVous);
 
                 //Ajout d'une consultation :
                 Consultation consultation = new Consultation();
@@ -74,6 +74,11 @@ public class HospitalApplication {
                 Consultation savedConsultation = hospitalServiceImp.saveConsultation(consultation);
 
         };
+    }
+
+    @Bean
+    ModelMapper modelMapper(){
+        return new ModelMapper();
     }
 
 }

@@ -26,7 +26,7 @@ public class RendezVous {
     private Patient patient ;
     @ManyToOne
     private Medecin medecin ;
-    @OneToOne(mappedBy = "rendezVous")
+    @OneToOne(mappedBy = "rendezVous", fetch = FetchType.EAGER)
     private Consultation consultation ;
 
     @Override

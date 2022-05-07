@@ -6,55 +6,50 @@ import com.lamkirich.hospital.Entities.Consultation;
 import com.lamkirich.hospital.Entities.Medecin;
 import com.lamkirich.hospital.Entities.Patient;
 import com.lamkirich.hospital.Entities.RendezVous;
-import com.lamkirich.hospital.Repositories.ConsultationRepository;
-import com.lamkirich.hospital.Repositories.MedecinRepository;
-import com.lamkirich.hospital.Repositories.PatientRepository;
 import com.lamkirich.hospital.Repositories.RendezVousRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Service
 @Transactional
-@Qualifier("hospitalImp")
-public class HospitalServiceImp implements HospitalService{
-    @Autowired
-    PatientRepository patientRepository ;
-    @Autowired
-    MedecinRepository medecinRepository ;
-    @Autowired
-    RendezVousRepository rendezVousRepository ;
-    @Autowired
-    ConsultationRepository consultationRepository ;
+@Qualifier("hospitalImp2")
+public class HospitalImp2 implements HospitalService{
 
+    @Autowired
+    ModelMapper modelMapper;
+    @Autowired
+    RendezVousRepository rendezVousRepository;
 
     @Override
     public Patient savePatient(Patient patient) {
-        return patientRepository.save(patient);
+        return null;
     }
 
     @Override
     public Medecin saveMedecin(Medecin medecin) {
-        return medecinRepository.save(medecin);
+        return null;
     }
 
     @Override
     public RendezVous saveRendezVous(RendezVous rendezVous) {
-        String idRDV = UUID.randomUUID().toString();
-        rendezVous.setId(idRDV);
-        return rendezVousRepository.save(rendezVous);
+        return null;
     }
 
     @Override
     public Consultation saveConsultation(Consultation consultation) {
-        return consultationRepository.save(consultation);
+        return null;
     }
 
     @Override
     public RendezVousDtoResponse saveRDV(RendezVousDtoRequest rendezVousDtoRequest) {
-        return null;
+        RendezVous RDV = modelMapper.map(rendezVousDtoRequest, RendezVous.class);
+        RDV.setId(UUID.randomUUID().toString());
+        RendezVous savedRDV = rendezVousRepository.save(RDV);
+        return modelMapper.map(savedRDV, RendezVousDtoResponse.class);
     }
+
 }
